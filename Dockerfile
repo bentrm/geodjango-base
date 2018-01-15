@@ -1,6 +1,6 @@
 FROM python:3.6-alpine
 
-RUN apk add --no-cache bash build-base gcc abuild binutils cmake linux-headers
+RUN apk add --no-cache  --virtual .build-deps build-base gcc abuild binutils cmake linux-headers
 
 ADD http://download.osgeo.org/geos/geos-3.5.1.tar.bz2 /
 RUN tar xjf /geos-3.5.1.tar.bz2 \
@@ -76,3 +76,5 @@ RUN unzip /gdal221.zip \
     --without-xml2 \
   && make && make install \
   && cd / && rm -Rf /gdal-2.2.1 /gdal221.zip
+
+RUN apk del .build-deps
